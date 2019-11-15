@@ -162,6 +162,7 @@ START=$(date +"%s")
            make O=out CC=clang ARCH=arm64 ${DEFCONFIG}
 	       make -kj$(nproc --all) O=out \
 	       ARCH=arm64 \
+	       CC=clang \
 	       LLVM=1 \
 	       LLVM_IAS=1 \
 	       CROSS_COMPILE=aarch64-linux-gnu- \
@@ -187,6 +188,7 @@ START=$(date +"%s")
            make -kj$(nproc --all) O=out \
 	       ARCH=arm64 \
 	       LLVM=1 \
+	       CC=clang \
 	       LLVM_IAS=1 \
 	       CLANG_TRIPLE=aarch64-linux-gnu- \
 	       CROSS_COMPILE=aarch64-linux-android- \
