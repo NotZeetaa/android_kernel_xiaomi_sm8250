@@ -36,11 +36,6 @@ static inline u8 choose(struct allowedips_node *node, const u8 *key)
 	return (key[node->bit_at_a] >> node->bit_at_b) & 1;
 }
 
-static void node_free_rcu(struct rcu_head *rcu)
-{
-	kfree(container_of(rcu, struct allowedips_node, rcu));
-}
-
 static void push_rcu(struct allowedips_node **stack,
 		     struct allowedips_node __rcu *p, unsigned int *len)
 {
