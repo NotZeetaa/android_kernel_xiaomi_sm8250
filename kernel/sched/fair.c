@@ -6183,7 +6183,7 @@ static int wake_affine(struct sched_domain *sd, struct task_struct *p,
 struct reciprocal_value schedtune_spc_rdiv;
 
 static long
-schedtune_margin(unsigned long signal, long boost)
+schedtune_margin(unsigned long signal, long boost, long capacity)
 {
 	long long margin = 0;
 
@@ -6192,12 +6192,14 @@ schedtune_margin(unsigned long signal, long boost)
 	 *
 	 * The Boost (B) value is used to compute a Margin (M) which is
 	 * proportional to the complement of the original Signal (S):
-	 *   M = B * (SCHED_CAPACITY_SCALE - S)
+	 *   M = B * (capacity - S)
 	 * The obtained M could be used by the caller to "boost" S.
 	 */
 	if (boost >= 0) {
-		margin  = SCHED_CAPACITY_SCALE - signal;
-		margin *= boost;
+		if (capacity > signal) {
+			margin  = capacity - signal;
+			margin *= boost;
+		}
 	} else
 		margin = -signal * boost;
 
@@ -6214,7 +6216,11 @@ schedtune_cpu_margin(unsigned long util, int cpu)
 	int boost = schedtune_cpu_boost(cpu);
 
 	if (boost == 0)
-		return 0;
+		margin = 0;
+	else
+		margin = schedtune_margin(util, boost, capacity_orig_of(cpu));
+
+	trace_sched_boost_cpu(cpu, util, margin);
 
 	return schedtune_margin(util, boost);
 }
@@ -6229,7 +6235,7 @@ long schedtune_task_margin(struct task_struct *task)
 		return 0;
 
 	util = task_util_est(task);
-	margin = schedtune_margin(util, boost);
+	margin = schedtune_margin(util, boost, SCHED_CAPACITY_SCALE);
 
 	return margin;
 }
@@ -7487,14 +7493,6 @@ static void find_best_target(struct sched_domain *sd, cpumask_t *cpus,
 		target_cpu = best_idle_cpu;
 		goto target;
 	}
-
-        if (target_cpu != -1 && !idle_cpu(target_cpu) &&
-                        best_idle_cpu != -1) {
-                curr_tsk = READ_ONCE(cpu_rq(target_cpu)->curr);
-                if (curr_tsk && schedtune_task_boost_rcu_locked(curr_tsk)) {
-                        target_cpu = best_idle_cpu;
-                }
-        }
 
 	adjust_cpus_for_packing(p, &target_cpu, &best_idle_cpu,
 				shallowest_idle_cstate,
