@@ -278,6 +278,9 @@ static void qcom_smp2p_notify_in(struct qcom_smp2p *smp2p)
 
 		status = val ^ entry->last_value;
 		entry->last_value = val;
+
+		/* Ensure irq_pending is read correctly */
+		mb();
 		status |= *entry->irq_pending;
 
 		SMP2P_INFO("%d:\t%s: status:%0lx val:%0x\n",
