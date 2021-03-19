@@ -1,7 +1,11 @@
 # SPDX-License-Identifier: GPL-2.0
 VERSION = 4
 PATCHLEVEL = 19
+<<<<<<< HEAD
 SUBLEVEL = 179
+=======
+SUBLEVEL = 181
+>>>>>>> 65cde37eebbc (Merge tag 'v4.19.181' of https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux into baseline-r)
 EXTRAVERSION =
 NAME = "People's Front"
 
