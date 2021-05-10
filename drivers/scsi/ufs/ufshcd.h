@@ -405,6 +405,15 @@ struct ufs_hba_pm_qos_variant_ops {
 };
 
 /**
+ * struct ufs_hba_pm_qos_variant_ops - variant specific PM QoS callbacks
+ */
+struct ufs_hba_pm_qos_variant_ops {
+	void		(*req_start)(struct ufs_hba *hba, struct request *req);
+	void		(*req_end)(struct ufs_hba *hba, struct request *req,
+				   bool should_lock);
+};
+
+/**
  * struct ufs_hba_variant - variant specific parameters
  * @name: variant name
  */
