@@ -25,6 +25,8 @@
 #endif
 #include "usbpd.h"
 
+#define STOP_USB_HOST 0
+
 enum usbpd_state {
 	PE_UNKNOWN,
 	PE_ERROR_RECOVERY,
