@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 echo "Cloning dependencies"
 git clone --depth=1 https://github.com/kdrag0n/proton-clang clang
-git clone --depth=1 https://github.com/NotZeetaa/Flashable_Zip_lmi.git -b alioth AnyKernel
+git clone --depth=1 https://github.com/NotZeetaa/Flashable_Zip_lmi.git AnyKernel
 echo "Done"
 IMAGE=$(pwd)/out/arch/arm64/boot/Image
 TANGGAL=$(date +"%F-%S")
@@ -49,7 +49,7 @@ function finerr() {
 }
 # Compile plox
 function compile() {
-    make O=out ARCH=arm64 vendor/alioth_defconfig
+    make O=out ARCH=arm64 vendor/lmi_defconfig
     make -j$(nproc --all) O=out \
                           ARCH=arm64 \
 			  CC=clang \
@@ -66,7 +66,7 @@ function compile() {
 # Zipping
 function zipping() {
     cd AnyKernel || exit 1
-    zip -r9 neXus-BETA-kernel-alioth-${TANGGAL}.zip *
+    zip -r9 neXus-BETA-kernel-lmi-${TANGGAL}.zip *
     cd ..
 }
 sticker
