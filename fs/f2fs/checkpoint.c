@@ -1651,8 +1651,6 @@ out:
 #if defined(CONFIG_UFSTW) && defined(UFS3V0)
 	bdev_clear_turbo_write(sbi->sb->s_bdev);
 #endif
-	if (cpc->reason != CP_RESIZE)
-		mutex_unlock(&sbi->cp_mutex);
 	return err;
 }
 
