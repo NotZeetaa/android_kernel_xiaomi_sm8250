@@ -25,17 +25,17 @@ function sendinfo() {
         -d chat_id="$chat_id" \
         -d "disable_web_page_preview=true" \
         -d "parse_mode=html" \
-        -d text="<b>• neXus Kernel •</b>%0ABuild started on <code>Drone CI</code>%0AFor device <b>Poco F3</b> (lmi)%0Abranch <code>$(git rev-parse --abbrev-ref HEAD)</code>(master)%0AUnder commit <code>$(git log --pretty=format:'"%h : %s"' -1)</code>%0AUsing compiler: <code>${KBUILD_COMPILER_STRING}</code>%0AStarted on <code>$(date)</code>%0A<b>Build Status:</b>#Stable"
+        -d text="<b>• neXus Kernel •</b>%0ABuild started on <code>Drone CI</code>%0AFor device <b>Poco F3</b> (alioth)%0Abranch <code>$(git rev-parse --abbrev-ref HEAD)</code>(master)%0AUnder commit <code>$(git log --pretty=format:'"%h : %s"' -1)</code>%0AUsing compiler: <code>${KBUILD_COMPILER_STRING}</code>%0AStarted on <code>$(date)</code>%0A<b>Build Status:</b>#Stable"
 }
 # Push kernel to channel
 function push() {
-    cd AnyKernel
+    cd AnyKernel2
     ZIP=$(echo *.zip)
     curl -F document=@$ZIP "https://api.telegram.org/bot$token/sendDocument" \
         -F chat_id="$chat_id" \
         -F "disable_web_page_preview=true" \
         -F "parse_mode=html" \
-        -F caption="Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). | For <b>Poco F3 (lmi)</b> | <b>${KBUILD_COMPILER_STRING}</b>"
+        -F caption="Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). | For <b>Poco F3 (alioth)</b> | <b>${KBUILD_COMPILER_STRING}</b>"
 }
 # Fin Error
 function finerr() {
