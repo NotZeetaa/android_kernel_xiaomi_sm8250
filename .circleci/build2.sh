@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 echo "Cloning dependencies"
-git clone --depth=1 https://github.com/kdrag0n/proton-clang clang
-git clone --depth=1 https://github.com/NotZeetaa/Flashable_Zip_lmi.git -b alioth AnyKernel
+git clone --depth=1 https://github.com/NotZeetaa/Flashable_Zip_lmi.git -b alioth AnyKernel2
 echo "Done"
 IMAGE=$(pwd)/out/arch/arm64/boot/Image
 TANGGAL=$(date +"%F-%S")
@@ -26,7 +25,7 @@ function sendinfo() {
         -d chat_id="$chat_id" \
         -d "disable_web_page_preview=true" \
         -d "parse_mode=html" \
-        -d text="<b>• neXus Kernel •</b>%0ABuild started on <code>Drone CI</code>%0AFor device <b>Poco F2 Pro</b> (lmi)%0Abranch <code>$(git rev-parse --abbrev-ref HEAD)</code>(master)%0AUnder commit <code>$(git log --pretty=format:'"%h : %s"' -1)</code>%0AUsing compiler: <code>${KBUILD_COMPILER_STRING}</code>%0AStarted on <code>$(date)</code>%0A<b>Build Status:</b>#Stable"
+        -d text="<b>• neXus Kernel •</b>%0ABuild started on <code>Drone CI</code>%0AFor device <b>Poco F3</b> (lmi)%0Abranch <code>$(git rev-parse --abbrev-ref HEAD)</code>(master)%0AUnder commit <code>$(git log --pretty=format:'"%h : %s"' -1)</code>%0AUsing compiler: <code>${KBUILD_COMPILER_STRING}</code>%0AStarted on <code>$(date)</code>%0A<b>Build Status:</b>#Stable"
 }
 # Push kernel to channel
 function push() {
@@ -36,7 +35,7 @@ function push() {
         -F chat_id="$chat_id" \
         -F "disable_web_page_preview=true" \
         -F "parse_mode=html" \
-        -F caption="Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). | For <b>Poco F2 Pro (lmi)</b> | <b>${KBUILD_COMPILER_STRING}</b>"
+        -F caption="Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). | For <b>Poco F3 (lmi)</b> | <b>${KBUILD_COMPILER_STRING}</b>"
 }
 # Fin Error
 function finerr() {
@@ -60,8 +59,8 @@ function compile() {
         finerr
         exit 1
     fi
-    cp out/arch/arm64/boot/Image AnyKernel
-    cp out/arch/arm64/boot/dtbo.img AnyKernel
+    cp out/arch/arm64/boot/Image AnyKernel2
+    cp out/arch/arm64/boot/dtbo.img AnyKernel2
 }
 # Zipping
 function zipping() {
