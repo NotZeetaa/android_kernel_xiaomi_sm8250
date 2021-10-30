@@ -10,4 +10,4 @@ steps:
      chat_id:
        from_secret: chat_id
    commands:
-     - bash .circleci/build.sh
+     - bash .circleci/build.sh && bash .circleci/build2.sh
