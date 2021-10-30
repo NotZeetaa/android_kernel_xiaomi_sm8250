@@ -1,0 +1,13 @@
+kind: pipeline
+name : xKernel Compiler
+version: rev1.5_template
+steps:
+ - name: xKernel Compilation
+   image: xyzuan/xdocker:latest
+   environment:
+     token:
+       from_secret: token
+     chat_id:
+       from_secret: chat_id
+   commands:
+     - bash .circleci/build.sh
