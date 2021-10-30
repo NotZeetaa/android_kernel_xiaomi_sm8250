@@ -64,7 +64,7 @@ function compile() {
 }
 # Zipping
 function zipping() {
-    cd AnyKernel || exit 1
+    cd AnyKernel2 || exit 1
     zip -r9 neXus-BETA-kernel-alioth-${TANGGAL}.zip *
     cd ..
 }
