@@ -27,7 +27,7 @@ And public attribution of xiaomi platforms(like J1 and so and)
 			qcom,silver-khz = <1708800>;
 			qcom,gold-khz = <2342400>;
 			qcom,prime-khz = <2841600>;
-			qcom,trip-deg = <950000>;
+			qcom,trip-deg = <95000>;
 		};
 
 		zone@2 {
