@@ -6946,7 +6946,7 @@ static int ipa3_pre_init(const struct ipa3_plat_drv_res *resource_p,
 		result = -ENODEV;
 		goto fail_device_create;
 	}
-
+#ifdef IPA_WAKELOCKS
 	/* Register a wakeup source. */
 	ipa3_ctx->w_lock =
 		wakeup_source_register(&ipa_pdev->dev, "IPA_WS");
@@ -7047,8 +7047,10 @@ fail_gsi_pre_fw_load_init:
 fail_ipa_dma_setup:
 	ipa_pm_destroy();
 fail_ipa_pm_init:
+#ifdef IPA_WAKELOCKS
 	wakeup_source_unregister(ipa3_ctx->w_lock);
 	ipa3_ctx->w_lock = NULL;
+#endif
 fail_w_source_register:
 	device_destroy(ipa3_ctx->cdev.class, ipa3_ctx->cdev.dev_num);
 fail_device_create:
