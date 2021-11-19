@@ -6,7 +6,7 @@ name : xKernel Compiler
 version: rev1.5_template
 steps:
  - name: xKernel Compilation
-   image: xyzuan/xdocker:latest
+   image: panchajanya1999/archlinux:latest
    environment:
      token:
        from_secret: token
