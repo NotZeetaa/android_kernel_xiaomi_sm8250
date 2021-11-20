@@ -84,4 +84,5 @@ clean
 END=$(date +"%s")
 DIFF=$(($END - $START))
 push
+clean
 
