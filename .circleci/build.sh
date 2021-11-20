@@ -27,7 +27,7 @@ function sendinfo() {
         -d chat_id="$chat_id" \
         -d "disable_web_page_preview=true" \
         -d "parse_mode=html" \
-        -d text="<b>• neXus Kernel •</b>%0ABuild started on <code>Drone CI</code>%0AFor device <b>Poco F2 Pro</b> (lmi) <b>FOD:Udfps/NewFod</b> %0Abranch <code>$(git rev-parse --abbrev-ref HEAD)</code>(master)%0AUnder commit <code>$(git log --pretty=format:'"%h : %s"' -1)</code>%0AUsing compiler: <code>${KBUILD_COMPILER_STRING}</code>%0AStarted on <code>$(date)</code>%0A<b>Build Status:</b>#Stable"
+        -d text="<b>• neXus Kernel •</b>%0ABuild started on <code>Drone CI</code>%0AFor device <b>Poco F2 Pro</b> (lmi)%0Abranch <code>$(git rev-parse --abbrev-ref HEAD)</code>(master)%0AUnder commit <code>$(git log --pretty=format:'"%h : %s"' -1)</code>%0AUsing compiler: <code>${KBUILD_COMPILER_STRING}</code>%0AStarted on <code>$(date)</code>%0A<b>Build Status:</b>#Stable"
 }
 # Push kernel to channel
 function push() {
@@ -37,7 +37,7 @@ function push() {
         -F chat_id="$chat_id" \
         -F "disable_web_page_preview=true" \
         -F "parse_mode=html" \
-        -F caption="<b>FOD:Udfps/NewFod</b> Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). | For <b>Poco F2 Pro (lmi)</b> | <b>${KBUILD_COMPILER_STRING}</b>"
+        -F caption="Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). | For <b>Poco F2 Pro (lmi)</b> | <b>${KBUILD_COMPILER_STRING}</b>"
 }
 # Fin Error
 function finerr() {
@@ -70,19 +70,10 @@ function zipping() {
     zip -r9 neXus-BETA-kernel-lmi-${TANGGAL}.zip *
     cd ..
 }
-# Clean
-function clean() {
-    rm -rf out/arch/arm64/boot/Image
-    rm -rf out/arch/arm64/boot/dtbo.img
-    echo "************************"
-    echo "    Cleaned Done"
-    echo "************************"
-}
 sticker
 sendinfo
 compile
 zipping
-clean
 END=$(date +"%s")
 DIFF=$(($END - $START))
 push

@@ -69,19 +69,10 @@ function zipping() {
     zip -r9 neXus-BETA-kernel-alioth-${TANGGAL}.zip *
     cd ..
 }
-# Clean
-function clean() {
-    rm -rf out/arch/arm64/boot/Image
-    rm -rf out/arch/arm64/boot/dtbo.img
-    echo "************************"
-    echo "    Cleaned Done"
-    echo "************************"
-}
 sticker
 sendinfo
 compile
 zipping
-clean
 END=$(date +"%s")
 DIFF=$(($END - $START))
 push
