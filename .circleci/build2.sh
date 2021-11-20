@@ -81,6 +81,7 @@ sticker
 sendinfo
 compile
 zipping
+clean
 END=$(date +"%s")
 DIFF=$(($END - $START))
 push
