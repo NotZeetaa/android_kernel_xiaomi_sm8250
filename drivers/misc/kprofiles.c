@@ -8,7 +8,7 @@
 #include <linux/kprofiles.h>
 #include <linux/delay.h>
 #ifdef CONFIG_AUTO_KPROFILES_MSM_DRM
-#include <linux/msm_drm_notify.h>
+#include <drm/drm_notifier_mi.h>
 #elif defined(CONFIG_AUTO_KPROFILES_FB)
 #include <linux/fb.h>
 #endif
@@ -47,10 +47,10 @@ static inline int common_notifier_callback(struct notifier_block *self,
 				unsigned long event, void *data)
 {
 #ifdef CONFIG_AUTO_KPROFILES_MSM_DRM
-	struct msm_drm_notifier *evdata = data;
+	struct mi_drm_notifier *evdata = data;
 	int *blank;
 
-	if (event != MSM_DRM_EVENT_BLANK)
+	if (event != MI_DRM_EVENT_BLANK)
 		goto out;
 
 	if (!evdata || !evdata->data || evdata->id != MSM_DRM_PRIMARY_DISPLAY)
@@ -58,12 +58,12 @@ static inline int common_notifier_callback(struct notifier_block *self,
 
 	blank = evdata->data;
 	switch (*blank) {
-	case MSM_DRM_BLANK_POWERDOWN:
+	case MI_DRM_BLANK_POWERDOWN:
 		if (!screen_on)
 			break;
 		screen_on = false;
 		break;
-	case MSM_DRM_BLANK_UNBLANK:
+	case MI_DRM_BLANK_UNBLANK:
 		if (screen_on)
 			break;
 		screen_on = true;
@@ -124,7 +124,7 @@ static int  __init kprofiles_init(void)
 {
 	set_mode = mode;
 #ifdef CONFIG_AUTO_KPROFILES_MSM_DRM
-	msm_drm_register_client(&common_notifier_block);
+	mi_drm_register_client(&common_notifier_block);
 #elif defined(CONFIG_AUTO_KPROFILES_FB)
 	fb_register_client(&common_notifier_block);
 #endif
