@@ -14,6 +14,7 @@
 #include <linux/slab.h>
 #include <linux/version.h>
 #include <drm/drm_panel.h>
+#include <linux/kprofiles.h>
 
 /* The sched_param struct is located elsewhere in newer kernels */
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 10, 0)
@@ -121,16 +122,16 @@ static void update_online_cpu_policy(void)
 
 static void __cpu_input_boost_kick(struct boost_drv *b)
 {
-	if (test_bit(SCREEN_OFF, &b->state))
-		return;
+  if (test_bit(SCREEN_OFF, &b->state) || active_mode() == 1)
+    return;
 
 	if (!input_boost_duration)
 		return;
 
-	set_bit(INPUT_BOOST, &b->state);
-	if (!mod_delayed_work(system_unbound_wq, &b->input_unboost,
+  set_bit(INPUT_BOOST, &b->state);
+  if (!mod_delayed_work(system_unbound_wq, &b->input_unboost,
 			      msecs_to_jiffies(input_boost_duration)))
-		wake_up(&b->boost_waitq);
+    wake_upwake_up(&b->boost_waitq);
 }
 
 void cpu_input_boost_kick(void)
@@ -146,7 +147,7 @@ static void __cpu_input_boost_kick_max(struct boost_drv *b,
 	unsigned long boost_jiffies = msecs_to_jiffies(duration_ms);
 	unsigned long curr_expires, new_expires;
 
-	if (test_bit(SCREEN_OFF, &b->state))
+	if (test_bit(SCREEN_OFF, &b->state) || active_mode() == 1)
 		return;
 
 	do {
