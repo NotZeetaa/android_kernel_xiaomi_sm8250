@@ -837,7 +837,9 @@ int ipa_pm_deregister(u32 hdl)
 		if (ipa_pm_ctx->clients_by_pipe[i] == ipa_pm_ctx->clients[hdl])
 			ipa_pm_ctx->clients_by_pipe[i] = NULL;
 	}
+#ifdef IPA_WAKELOCKS
 	wakeup_source_unregister(client->wlock);
+#endif
 	kfree(client);
 	ipa_pm_ctx->clients[hdl] = NULL;
 
@@ -955,8 +957,10 @@ static int ipa_pm_activate_helper(struct ipa_pm_client *client, bool sync)
 	/* we got the clocks */
 	if (result == 0) {
 		client->state = IPA_PM_ACTIVATED;
+#ifdef IPA_WAKELOCKS
 		if (client->group == IPA_PM_GROUP_APPS)
 			__pm_stay_awake(client->wlock);
+#endif
 		spin_unlock_irqrestore(&client->state_lock, flags);
 		activate_client(client->hdl);
 		if (sync)
@@ -1135,8 +1139,10 @@ int ipa_pm_deactivate_all_deferred(void)
 			spin_unlock_irqrestore(&client->state_lock, flags);
 			if (!client->skip_clk_vote) {
 				IPA_ACTIVE_CLIENTS_DEC_SPECIAL(client->name);
+#ifdef IPA_WAKELOCKS
 				if (client->group == IPA_PM_GROUP_APPS)
 					__pm_relax(client->wlock);
+#endif
 			}
 			deactivate_client(client->hdl);
 		} else /* if activated or deactivated, we do nothing */
@@ -1190,8 +1196,10 @@ int ipa_pm_deactivate_sync(u32 hdl)
 	/* else case (Deactivates all Activated cases)*/
 	if (!client->skip_clk_vote) {
 		IPA_ACTIVE_CLIENTS_DEC_SPECIAL(client->name);
+#ifdef IPA_WAKELOCKS
 		if (client->group == IPA_PM_GROUP_APPS)
 			__pm_relax(client->wlock);
+#endif
 	}
 
 	spin_lock_irqsave(&client->state_lock, flags);
