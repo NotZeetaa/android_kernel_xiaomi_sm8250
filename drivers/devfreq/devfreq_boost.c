@@ -11,6 +11,7 @@
 #include <drm/drm_notifier_mi.h>
 #include <linux/slab.h>
 #include <uapi/linux/sched/types.h>
+#include <linux/kprofiles.h>
 
 enum {
 	SCREEN_OFF,
