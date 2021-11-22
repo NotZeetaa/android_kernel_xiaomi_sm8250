@@ -149,9 +149,7 @@ struct ipa_pm_client {
 	struct work_struct activate_work;
 	struct delayed_work deactivate_work;
 	struct completion complete;
-#ifdef IPA_WAKELOCKS
 	struct wakeup_source *wlock;
-#endif
 };
 
 /*
@@ -402,10 +400,8 @@ static void activate_work_func(struct work_struct *work)
 	client = container_of(work, struct ipa_pm_client, activate_work);
 	if (!client->skip_clk_vote) {
 		IPA_ACTIVE_CLIENTS_INC_SPECIAL(client->name);
-#ifdef IPA_WAKELOCKS
 		if (client->group == IPA_PM_GROUP_APPS)
 			__pm_stay_awake(client->wlock);
-#endif
 	}
 
 	spin_lock_irqsave(&client->state_lock, flags);
@@ -426,10 +422,8 @@ static void activate_work_func(struct work_struct *work)
 	if (dec_clk) {
 		if (!client->skip_clk_vote) {
 			IPA_ACTIVE_CLIENTS_DEC_SPECIAL(client->name);
-#ifdef IPA_WAKELOCKS
 			if (client->group == IPA_PM_GROUP_APPS)
 				__pm_relax(client->wlock);
-#endif
 		}
 
 		IPA_PM_DBG_STATE(client->hdl, client->name, client->state);
@@ -487,10 +481,8 @@ static void delayed_deferred_deactivate_work_func(struct work_struct *work)
 		spin_unlock_irqrestore(&client->state_lock, flags);
 		if (!client->skip_clk_vote) {
 			IPA_ACTIVE_CLIENTS_DEC_SPECIAL(client->name);
-#ifdef IPA_WAKELOCKS
 			if (client->group == IPA_PM_GROUP_APPS)
 				__pm_relax(client->wlock);
-#endif
 		}
 
 		deactivate_client(client->hdl);
@@ -764,7 +756,6 @@ int ipa_pm_register(struct ipa_pm_register_params *params, u32 *hdl)
 	client->group = params->group;
 	client->hdl = *hdl;
 	client->skip_clk_vote = params->skip_clk_vote;
-#ifdef IPA_WAKELOCKS
 	client->wlock = wakeup_source_register(NULL, client->name);
 	if (!client->wlock) {
 		ipa_pm_deregister(*hdl);
@@ -772,7 +763,6 @@ int ipa_pm_register(struct ipa_pm_register_params *params, u32 *hdl)
 			   client->name);
 		return -ENOMEM;
 	}
-#endif
 	init_completion(&client->complete);
 
 	/* add client to exception list */
