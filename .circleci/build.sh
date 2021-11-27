@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 echo "Cloning dependencies"
-git clone --depth=1 https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master/clang-r437112.tar.gz clang
+git clone https://gitlab.com/ElectroPerf/atom-x-clang clang
+cd clang && git checkout 06c20aff3cd0b463a5603dc7dedd47d64a6a8b8b && cd ..
 git clone --depth=1 https://github.com/NotZeetaa/Flashable_Zip_lmi.git AnyKernel
 echo "Done"
 IMAGE=$(pwd)/out/arch/arm64/boot/Image
