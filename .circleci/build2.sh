@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 echo "Cloning dependencies"
-git clone --depth=1 https://gitlab.com/ImSpiDy/azure-clang.git clang
 git clone --depth=1 https://github.com/NotZeetaa/Flashable_Zip_lmi.git -b alioth AnyKernel2
 echo "Done"
 IMAGE=$(pwd)/out/arch/arm64/boot/Image
@@ -26,7 +25,7 @@ function sendinfo() {
         -d chat_id="$chat_id" \
         -d "disable_web_page_preview=true" \
         -d "parse_mode=html" \
-        -d text="<b>• neXus Kernel •</b>%0ABuild started on <code>Drone CI</code>%0AFor device <b>Poco F3</b> (alioth)%0Abranch <code>$(git rev-parse --abbrev-ref HEAD)</code>(master)%0AUnder commit <code>$(git log --pretty=format:'"%h : %s"' -1)</code>%0AUsing compiler: <code>${KBUILD_COMPILER_STRING}</code>%0AStarted on <code>$(date)</code>%0A<b>Build Status:</b>#Stable"
+        -d text="<b>• aRise Kernel •</b>%0ABuild started on <code>Drone CI</code>%0AFor device <b>Poco F3</b> (alioth)%0Abranch <code>$(git rev-parse --abbrev-ref HEAD)</code>(master)%0AUnder commit <code>$(git log --pretty=format:'"%h : %s"' -1)</code>%0AUsing compiler: <code>${KBUILD_COMPILER_STRING}</code>%0AStarted on <code>$(date)</code>%0A<b>Build Status:</b>#Stable"
 }
 # Push kernel to channel
 function push() {
@@ -66,7 +65,7 @@ function compile() {
 # Zipping
 function zipping() {
     cd AnyKernel2 || exit 1
-    zip -r9 neXus-BETA-kernel-alioth-${TANGGAL}.zip *
+    zip -r9 aRise-BETA-kernel-alioth-${TANGGAL}.zip *
     cd ..
 }
 # Clean
