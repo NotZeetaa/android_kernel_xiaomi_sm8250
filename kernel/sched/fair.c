@@ -24,6 +24,8 @@
 
 #include <trace/events/sched.h>
 
+#include <linux/kprofiles.h>
+
 #include "walt.h"
 
 #ifdef CONFIG_SMP
@@ -213,6 +215,12 @@ static unsigned int get_update_sysctl_factor(void)
 {
 	unsigned int cpus = min_t(unsigned int, num_online_cpus(), 8);
 	unsigned int factor;
+	
+#ifdef CONFIG_KPROFILES
+	/* Disable `sched_tunable_scaling` when kprofiles is enabled */
+	if (active_mode() != 0)
+	  sysctl_sched_tunable_scaling = 0;
+#endif
 
 	switch (sysctl_sched_tunable_scaling) {
 	case SCHED_TUNABLESCALING_NONE:
