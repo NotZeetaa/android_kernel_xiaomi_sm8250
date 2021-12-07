@@ -1,19 +1,13 @@
 #!/usr/bin/env bash
 echo "Cloning dependencies"
-mkdir aosp-clang
-                cd aosp-clang || exit
-         wget -q https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master/clang-r437112.tar.gz
-                tar -xf clang*
-                cd .. || exit
-          git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9.git --depth=1 gcc
-         git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9.git  --depth=1 gcc32
-         PATH="${KERNEL_DIR}/aosp-clang/bin:${KERNEL_DIR}/gcc/bin:${KERNEL_DIR}/gcc32/bin:${PATH}"
+git clone --depth=1 https://gitlab.com/ImSpiDy/azure-clang.git clang
 git clone --depth=1 https://github.com/NotZeetaa/Flashable_Zip_lmi.git -b alioth AnyKernel2
 echo "Done"
 IMAGE=$(pwd)/out/arch/arm64/boot/Image
 TANGGAL=$(date +"%F-%S")
 START=$(date +"%s")
 KERNEL_DIR=$(pwd)
+PATH="${PWD}/clang/bin:$PATH"
 export KBUILD_COMPILER_STRING="$(${KERNEL_DIR}/clang/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')"
 export ARCH=arm64
 export KBUILD_BUILD_HOST=droneci
@@ -59,15 +53,13 @@ function compile() {
     make -j$(nproc --all) O=out \
                           ARCH=arm64 \
 			  CC=clang \
-			  CROSS_COMPILE=aarch64-linux-android- \
-			  CLANG_TRIPLE=aarch64-linux-gnu- \
-			  CROSS_COMPILE_ARM32=arm-linux-androideabi-
+			  CROSS_COMPILE=aarch64-linux-gnu- \
+			  CROSS_COMPILE_ARM32=arm-linux-gnueabi-
 
     if ! [ -a "$IMAGE" ]; then
         finerr
         exit 1
     fi
-    cp out/arch/arm64/boot/dts/vendor/qcom/kona-v2.1.dtb AnyKernel2/dtb
     cp out/arch/arm64/boot/Image AnyKernel2
     cp out/arch/arm64/boot/dtbo.img AnyKernel2
 }
@@ -79,7 +71,6 @@ function zipping() {
 }
 # Clean
 function clean() {
-    rm -rf out/arch/arm64/boot/dts/vendor/qcom/kona-v2.1.dtb
     rm -rf out/arch/arm64/boot/Image
     rm -rf out/arch/arm64/boot/dtbo.img
     echo "************************"
