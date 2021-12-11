@@ -211,6 +211,9 @@ static void do_input_boost(struct work_struct *work)
 	unsigned int i, ret;
 	struct cpu_sync *i_sync_info;
 	
+	if (!input_boost_ms)
+		return;
+	
 	if (active_mode() == 1) {
 		return;
 	}
