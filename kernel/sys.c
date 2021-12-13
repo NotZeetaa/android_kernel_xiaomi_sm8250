@@ -2077,7 +2077,7 @@ static int prctl_set_auxv(struct mm_struct *mm, unsigned long addr,
 	 * up to the caller to provide sane values here, otherwise userspace
 	 * tools which use this vector might be unhappy.
 	 */
-	unsigned long user_auxv[AT_VECTOR_SIZE] = { 0 };
+	unsigned long user_auxv[AT_VECTOR_SIZE];
 
 	if (len > sizeof(user_auxv))
 		return -EINVAL;
