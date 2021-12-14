@@ -630,19 +630,6 @@ static int cnss_get_bdf_file_name(struct cnss_plat_data *plat_priv,
 
 	switch (bdf_type) {
 	case CNSS_BDF_ELF:
-<<<<<<< HEAD
-		if (plat_priv->board_info.board_id == 0xFF)
-#ifdef CONFIG_MACH_XIAOMI_SM8250
-			cnss_get_xiaomi_bdf_file_name(filename_tmp, filename_len, bdf_type);
-#else
-			snprintf(filename_tmp, filename_len, ELF_BDF_FILE_NAME);
-#endif
-		else if (plat_priv->board_info.board_id < 0xFF)
-			snprintf(filename_tmp, filename_len,
-				 ELF_BDF_FILE_NAME_PREFIX "%02x",
-				 plat_priv->board_info.board_id);
-		else
-=======
 		/* Board ID will be equal or less than 0xFF in GF mask case */
 		if (plat_priv->board_info.board_id == 0xFF) {
 			if (plat_priv->chip_info.chip_id & CHIP_ID_GF_MASK)
@@ -661,7 +648,6 @@ static int cnss_get_bdf_file_name(struct cnss_plat_data *plat_priv,
 					 ELF_BDF_FILE_NAME_PREFIX "%02x",
 					 plat_priv->board_info.board_id);
 		} else {
->>>>>>> 46742c153c8addb175a91c4ab77edb5197b7e440
 			snprintf(filename_tmp, filename_len,
 				 BDF_FILE_NAME_PREFIX "%02x.e%02x",
 				 plat_priv->board_info.board_id >> 8 & 0xFF,
