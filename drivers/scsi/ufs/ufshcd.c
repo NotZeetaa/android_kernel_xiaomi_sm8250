@@ -5796,13 +5796,9 @@ static int ufshcd_complete_dev_init(struct ufs_hba *hba)
 	int i = 0;
 	int err;
 	bool flag_res = 1;
-<<<<<<< HEAD
 #ifdef CONFIG_MACH_XIAOMI_SM8250
 	ktime_t timeout;
 #endif
-=======
-	ktime_t timeout;
->>>>>>> 55dcca42232a81ddbf6d5231485aae471359489c
 
 	err = ufshcd_query_flag_retry(hba, UPIU_QUERY_OPCODE_SET_FLAG,
 		QUERY_FLAG_IDN_FDEVICEINIT, NULL);
@@ -5813,7 +5809,6 @@ static int ufshcd_complete_dev_init(struct ufs_hba *hba)
 		goto out;
 	}
 
-<<<<<<< HEAD
 #ifdef CONFIG_MACH_XIAOMI_SM8250
 	/*
 	* Some vendor devices are taking longer time to complete its internal
@@ -5832,43 +5827,20 @@ static int ufshcd_complete_dev_init(struct ufs_hba *hba)
 		err = ufshcd_query_flag_retry(hba, UPIU_QUERY_OPCODE_READ_FLAG,
 			QUERY_FLAG_IDN_FDEVICEINIT, &flag_res);
 #ifdef CONFIG_MACH_XIAOMI_SM8250
-=======
-	/*
-	 * Some vendor devices are taking longer time to complete its internal
-	 * initialization, so set fDeviceInit flag poll time to 5 secs
-	 */
-	timeout = ktime_add_ms(ktime_get(), 5000);
-
-	/* poll for max. 5sec for fDeviceInit flag to clear */
-	while (1) {
-		bool timedout = ktime_after(ktime_get(), timeout);
-		err = ufshcd_query_flag_retry(hba, UPIU_QUERY_OPCODE_READ_FLAG,
-					QUERY_FLAG_IDN_FDEVICEINIT, &flag_res);
->>>>>>> 55dcca42232a81ddbf6d5231485aae471359489c
 		if (err || !flag_res || timedout)
 			break;
 
 		/*
-<<<<<<< HEAD
 		* Poll for this flag in a tight loop for first 1000 iterations.
 		* This is same as old logic which is working for most of the
 		* devices, so continue using the same.
 		*/
-=======
-		 * Poll for this flag in a tight loop for first 1000 iterations.
-		 * This is same as old logic which is working for most of the
-		 * devices, so continue using the same.
-		 */
->>>>>>> 55dcca42232a81ddbf6d5231485aae471359489c
 		if (i == 1000)
 			msleep(20);
 		else
 			i++;
 	}
-<<<<<<< HEAD
 #endif
-=======
->>>>>>> 55dcca42232a81ddbf6d5231485aae471359489c
 
 	if (err)
 		dev_err(hba->dev,
@@ -6267,7 +6239,6 @@ static int ufshcd_get_lu_wp(struct ufs_hba *hba,
 	return ret;
 }
 
-<<<<<<< HEAD
 #ifndef CONFIG_MACH_XIAOMI_SM8250
 /*
  * ufshcd_get_wb_alloc_units - returns "dLUNumWriteBoosterBufferAllocUnits"
@@ -6301,8 +6272,6 @@ static int ufshcd_get_wb_alloc_units(struct ufs_hba *hba,
 }
 #endif
 
-=======
->>>>>>> edb7b6143c4e2348826fb91c43182b3ac40fdf8a
 /**
  * ufshcd_get_lu_power_on_wp_status - get LU's power on write protect
  * status
@@ -8724,19 +8693,14 @@ static int ufs_get_device_desc(struct ufs_hba *hba,
 {
 	int err;
 	size_t buff_len;
-<<<<<<< HEAD
 	u8 model_index;
 #ifdef CONFIG_MACH_XIAOMI_SM8250
 	u8 *desc_buf;
+	u32 d_lu_wb_buf_alloc;
 #else
 	u8 *desc_buf, wb_buf[4];
 	u32 lun, res;
 #endif
-=======
-	u8 model_index, lun;
-	u8 *desc_buf;
-	u32 d_lu_wb_buf_alloc;
->>>>>>> edb7b6143c4e2348826fb91c43182b3ac40fdf8a
 
 	buff_len = max_t(size_t, hba->desc_size.dev_desc,
 			 QUERY_DESC_MAX_SIZE + 1);
