@@ -59,7 +59,6 @@ function compile() {
         finerr
         exit 1
     fi
-    cp out/arch/arm64/boot/dts/vendor/qcom/kona-v2.1.dtb AnyKernel2/dtb
     cp out/arch/arm64/boot/Image AnyKernel2
     cp out/arch/arm64/boot/dtbo.img AnyKernel2
 }
@@ -73,7 +72,6 @@ function zipping() {
 function clean() {
     rm -rf out/arch/arm64/boot/Image
     rm -rf out/arch/arm64/boot/dtbo.img
-    rm -rf out/arch/arm64/boot/dts/vendor/qcom/kona-v2.1.dtb
     echo "************************"
     echo "    Cleaned Done"
     echo "************************"
