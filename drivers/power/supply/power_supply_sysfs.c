@@ -559,6 +559,7 @@ static struct device_attribute power_supply_attrs[] = {
 #ifdef CONFIG_MACH_XIAOMI_SM8250
 	POWER_SUPPLY_ATTR(dc_thermal_levels),
 #endif
+	POWER_SUPPLY_ATTR(fg_reset_clock),
 	POWER_SUPPLY_ATTR(connector_type),
 	POWER_SUPPLY_ATTR(parallel_batfet_mode),
 	POWER_SUPPLY_ATTR(parallel_fcc_max),
