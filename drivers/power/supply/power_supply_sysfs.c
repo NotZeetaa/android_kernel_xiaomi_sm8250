@@ -639,6 +639,7 @@ static struct device_attribute power_supply_attrs[] = {
 	POWER_SUPPLY_ATTR(cp_ilim),
 	POWER_SUPPLY_ATTR(irq_status),
 	POWER_SUPPLY_ATTR(parallel_output_mode),
+	POWER_SUPPLY_ATTR(cc_toggle_enable),
 #ifdef CONFIG_MACH_XIAOMI_SM8250
 	POWER_SUPPLY_ATTR(cp_win_ov),
 	POWER_SUPPLY_ATTR(cp_passthrough_mode),
