@@ -6,15 +6,11 @@ name : xKernel Compiler
 version: rev1.5_template
 steps:
  - name: xKernel Compilation
-   image: fadlyas/kernel_dockerfile
+   image: panchajanya1999/archlinux:latest
    environment:
      token:
        from_secret: token
      chat_id:
        from_secret: chat_id
-   image: archlinux:base-devel
    commands:
-     - curl -LO "https://repo.archlinuxcn.org/x86_64/glibc-linux4-2.33-4-x86_64.pkg.tar.zst" && bsdtar -C / -xvf "glibc-linux4-2.33-4-x86_64.pkg.tar.zst"
-     - pacman -Sy && pacman -S git base-devel bison ccache clang cpio cmake flex git libelf lld llvm ninja openssl python3 uboot-tools bc inetutils python2 zip wget cpio jdk-openjdk tzdata --noconfirm
-     - ln -s /usr/share/zoneinfo/Europe/Rome /etc/localtime && date
      - bash .circleci/build.sh && bash .circleci/build2.sh
