@@ -19,7 +19,7 @@
 
 extern ssize_t xlogchar_kwrite(const char __user *buf, size_t count);
 
-int send_DC_data_to_xlog(int dc_current_cnt, char *reason);
+void send_DC_data_to_xlog(int dc_current_cnt, char *reason);
 int xlog_send_int(int dc_current_cnt, char *reason);
 int xlog_format_msg_int (char *msg, int dc_current_cnt, char *reason);
 
