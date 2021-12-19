@@ -1541,7 +1541,6 @@ static const struct apsd_result *smblib_update_usb_type(struct smb_charger *chg)
 #endif
 			chg->real_charger_type = apsd_result->pst;
 		}
-#endif
 	}
 
 	smblib_dbg(chg, PR_MISC, "APSD=%s PD=%d QC3P5=%d\n",
