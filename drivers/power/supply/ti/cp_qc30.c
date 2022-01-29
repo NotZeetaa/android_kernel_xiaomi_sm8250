@@ -1229,6 +1229,7 @@ void cp_statemachine(unsigned int port)
 
 static void cp_workfunc(struct work_struct *work)
 {
+	struct power_supply *onsemi_psy;
 	cp_get_usb_type();
 
 	cp_update_sw_status();
@@ -1243,6 +1244,9 @@ static void cp_workfunc(struct work_struct *work)
 		if (pm_state.bms_fastcharge_mode)
 			qc3_set_bms_fastcharge_mode(false);
 		cp_move_state(CP_STATE_DISCONNECT);
+		onsemi_psy = power_supply_get_by_name("ln8000");
+		if (onsemi_psy)
+			pm_state.state = CP_STATE_DISCONNECT;
 	}
 	cp_statemachine(0);
 
