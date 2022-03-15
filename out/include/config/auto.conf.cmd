@@ -793,6 +793,7 @@ deps_config := \
 	drivers/i2c/algos/Kconfig \
 	drivers/i2c/muxes/Kconfig \
 	drivers/i2c/Kconfig \
+	drivers/char/srandom/Kconfig \
 	drivers/char/diag/Kconfig \
 	drivers/char/xillybus/Kconfig \
 	drivers/s390/char/Kconfig \
