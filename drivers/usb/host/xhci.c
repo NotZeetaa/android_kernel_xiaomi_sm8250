@@ -227,6 +227,7 @@ int xhci_reset(struct xhci_hcd *xhci)
 
 	ret = xhci_handshake_check_state(xhci, &xhci->op_regs->command,
 			CMD_RESET, 0, 1000 * 1000);
+
 	if (ret)
 		return ret;
 
