@@ -61,6 +61,12 @@ function cloneTC() {
 	git clone --depth=1  https://github.com/kdrag0n/proton-clang.git clang
 	PATH="${KERNEL_DIR}/clang/bin:$PATH"
 	
+	elif [ $COMPILER = "prelude" ];
+	then
+	post_msg " Cloning Prelude Clang ToolChain"
+	git clone --depth=1 https://gitlab.com/jjpprrrr/prelude-clang.git clang
+	PATH="${KERNEL_DIR}/clang/bin:$PATH"
+	
 	elif [ $COMPILER = "eva" ];
 	then
 	post_msg " Cloning Eva GCC ToolChain "
