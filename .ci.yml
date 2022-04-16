@@ -13,4 +13,4 @@ steps:
      chat_id:
        from_secret: chat_id
    commands:
-     - bash build.sh
+     - bash build.sh && bash build2.sh
