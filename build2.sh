@@ -42,6 +42,10 @@ FINAL_ZIP=${ZIPNAME}-${VERSION}-${DEVICE}-KERNEL-AOSP-${TANGGAL}.zip
 #FINAL_ZIP2=${ZIPNAME}-${VERSION}-${DEVICE}-KERNEL-MIUI-${TANGGAL}.zip
 
 ##----------------------------------------------------------##
+# Specify Linker
+LINKER=ld.lld
+
+##----------------------------------------------------------##
 # Specify compiler [ proton, atomx, eva, aosp ]
 COMPILER=prelude
 
@@ -167,6 +171,7 @@ START=$(date +"%s")
 	       ARCH=arm64 \
 	       LLVM=1 \
 	       LLVM_IAS=1 \
+	       LD=${LINKER} \
 	       CROSS_COMPILE=aarch64-linux-gnu- \
 	       CROSS_COMPILE_COMPAT=arm-linux-gnueabi- \
 	       V=$VERBOSE 2>&1 | tee error.log
