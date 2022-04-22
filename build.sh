@@ -47,7 +47,7 @@ LINKER=ld.lld
 
 ##----------------------------------------------------------##
 # Specify compiler [ proton, atomx, eva, aosp ]
-COMPILER=proton
+COMPILER=atomx
 
 ##----------------------------------------------------------##
 # Clone ToolChain
@@ -56,7 +56,7 @@ function cloneTC() {
 	if [ $COMPILER = "atomx" ];
 	then
 	post_msg " Cloning Atom-X Clang ToolChain "
-	git clone --depth=1 https://gitlab.com/ElectroPerf/atom-x-clang clang
+	git clone --depth=1 https://gitlab.com/ElectroPerf/atom-x-clang.git clang
 	PATH="${KERNEL_DIR}/clang/bin:$PATH"
 	
 	elif [ $COMPILER = "proton" ];
