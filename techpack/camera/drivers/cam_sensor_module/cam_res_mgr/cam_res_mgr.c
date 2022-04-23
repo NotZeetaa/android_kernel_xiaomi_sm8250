@@ -664,6 +664,9 @@ static int cam_res_mgr_parse_dt(struct device *dev)
 static int cam_res_mgr_probe(struct platform_device *pdev)
 {
 	int rc = 0;
+	
+	if (cam_res)
+		return 0;
 
 	cam_res = kzalloc(sizeof(*cam_res), GFP_KERNEL);
 	if (!cam_res)
