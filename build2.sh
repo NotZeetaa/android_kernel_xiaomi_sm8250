@@ -47,7 +47,7 @@ LINKER=ld.lld
 
 ##----------------------------------------------------------##
 # Specify compiler [ proton, atomx, eva, aosp ]
-COMPILER=prelude
+COMPILER=atomx
 
 ##----------------------------------------------------------##
 # Clone ToolChain
