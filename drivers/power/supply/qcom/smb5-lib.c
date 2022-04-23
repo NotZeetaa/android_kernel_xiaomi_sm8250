@@ -6214,7 +6214,7 @@ int smblib_get_prop_typec_power_role(struct smb_charger *chg,
 		smblib_err(chg, "unsupported power role 0x%02lx\n",
 			ctrl & (EN_SRC_ONLY_BIT | EN_SNK_ONLY_BIT));
 		rc = -EINVAL;
-		goto unlock
+		goto unlock;
 	}
 
 	chg->power_role = val->intval;
