@@ -361,6 +361,7 @@ static unsigned long move_vma(struct vm_area_struct *vma,
 	if (!new_vma)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	/* new_vma is returned protected by copy_vma, to prevent speculative
 	 * page fault to be done in the destination area before we move the pte.
 	 * Now, we must also protect the source VMA since we don't want pages
@@ -369,6 +370,8 @@ static unsigned long move_vma(struct vm_area_struct *vma,
 	if (vma != new_vma)
 		vm_raw_write_begin(vma);
 
+=======
+>>>>>>> 9a85f9399fba (Revert "mm: protect mremap() against SPF hanlder")
 	moved_len = move_page_tables(vma, old_addr, new_vma, new_addr, old_len,
 				     need_rmap_locks);
 	if (moved_len < old_len) {
@@ -385,8 +388,11 @@ static unsigned long move_vma(struct vm_area_struct *vma,
 		 */
 		move_page_tables(new_vma, new_addr, vma, old_addr, moved_len,
 				 true);
+<<<<<<< HEAD
 		if (vma != new_vma)
 			vm_raw_write_end(vma);
+=======
+>>>>>>> 9a85f9399fba (Revert "mm: protect mremap() against SPF hanlder")
 		vma = new_vma;
 		old_len = new_len;
 		old_addr = new_addr;
@@ -395,10 +401,14 @@ static unsigned long move_vma(struct vm_area_struct *vma,
 		mremap_userfaultfd_prep(new_vma, uf);
 		arch_remap(mm, old_addr, old_addr + old_len,
 			   new_addr, new_addr + new_len);
+<<<<<<< HEAD
 		if (vma != new_vma)
 			vm_raw_write_end(vma);
 	}
 	vm_raw_write_end(new_vma);
+=======
+	}
+>>>>>>> 9a85f9399fba (Revert "mm: protect mremap() against SPF hanlder")
 
 	/* Conceal VM_ACCOUNT so old reservation is not undone */
 	if (vm_flags & VM_ACCOUNT) {
