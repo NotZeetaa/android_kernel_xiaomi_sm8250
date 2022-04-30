@@ -622,11 +622,10 @@ static struct vm_area_struct *vma_to_resize(unsigned long addr,
 	unsigned long *p)
 {
 	struct mm_struct *mm = current->mm;
-	struct vm_area_struct *vma;
+	struct vm_area_struct *vma = find_vma(mm, addr);
 	unsigned long pgoff;
 
-	vma = vma_lookup(mm, addr);
-	if (!vma)
+	if (!vma || vma->vm_start > addr)
 		return ERR_PTR(-EFAULT);
 
 	/*
