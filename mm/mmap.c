@@ -52,9 +52,6 @@
 #include <asm/tlb.h>
 #include <asm/mmu_context.h>
 
-#define CREATE_TRACE_POINTS
-#include <trace/events/mmap.h>
-
 #include "internal.h"
 
 #ifndef arch_mmap_check
@@ -2152,15 +2149,10 @@ found_highest:
  */
 unsigned long vm_unmapped_area(struct vm_unmapped_area_info *info)
 {
-	unsigned long addr;
-
 	if (info->flags & VM_UNMAPPED_AREA_TOPDOWN)
-		addr = unmapped_area_topdown(info);
+		return unmapped_area_topdown(info);
 	else
-		addr = unmapped_area(info);
-
-	trace_vm_unmapped_area(addr, info);
-	return addr;
+		return unmapped_area(info);
 }
 
 #ifndef arch_get_mmap_end
