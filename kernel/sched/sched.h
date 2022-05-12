@@ -1596,14 +1596,10 @@ static inline void unregister_sched_domain_sysctl(void)
 
 extern void flush_smp_call_function_from_idle(void);
 
-extern int newidle_balance(struct rq *this_rq, struct rq_flags *rf);
-
 #else /* !CONFIG_SMP: */
 static inline void flush_smp_call_function_from_idle(void) { }
 static inline void sched_ttwu_pending(void) { }
 #endif
-
-static inline int newidle_balance(struct rq *this_rq, struct rq_flags *rf) { return 0; }
 
 #include "stats.h"
 #include "autogroup.h"
@@ -2974,6 +2970,7 @@ struct related_thread_group *task_related_thread_group(struct task_struct *p)
 	return rcu_dereference(p->grp);
 }
 
+<<<<<<< HEAD
 static inline bool task_rtg_high_prio(struct task_struct *p)
 {
 	return task_in_related_thread_group(p) &&
@@ -2985,6 +2982,8 @@ static inline bool walt_low_latency_task(struct task_struct *p)
 	return sysctl_walt_low_latency_task_boost && p->low_latency;
 }
 
+=======
+>>>>>>> d9711b92f4af... kernel: squashed rollback of scheduler changes
 /* Is frequency of two cpus synchronized with each other? */
 static inline int same_freq_domain(int src_cpu, int dst_cpu)
 {
