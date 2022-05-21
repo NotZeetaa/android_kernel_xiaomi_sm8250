@@ -91,9 +91,9 @@ function cloneTC() {
 	wget -q https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master/clang-r450784e.tar.gz
         tar -xf clangB*
         cd .. || exit
-	git clone https://github.com/sohamxda7/llvm-stable -b gcc64 depth=1 gcc
-    git clone https://github.com/sohamxda7/llvm-stable -b gcc32  depth=1 gcc32
-    PATH="${KERNEL_DIR}/clangB/bin:${KERNEL_DIR}/gcc/bin:${KERNEL_DIR}/gcc32/bin:${PATH}"
+	git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9.git --depth=1 gcc
+	git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9.git  --depth=1 gcc32
+	PATH="${KERNEL_DIR}/clangB/bin:${KERNEL_DIR}/gcc/bin:${KERNEL_DIR}/gcc32/bin:${PATH}"
 	
 	elif [ $COMPILER = "sdclang" ];
 	then
@@ -206,7 +206,8 @@ START=$(date +"%s")
            make O=out CC=clang ARCH=arm64 ${DEFCONFIG}
            make -kj$(nproc --all) O=out \
 	       ARCH=arm64 \
-	       CC=clang \
+	       LLVM=1 \
+	       LLVM_IAS=1 \
 	       CLANG_TRIPLE=aarch64-linux-gnu- \
 	       CROSS_COMPILE=aarch64-linux-android- \
 	       CROSS_COMPILE_COMPAT=arm-linux-androideabi- \
