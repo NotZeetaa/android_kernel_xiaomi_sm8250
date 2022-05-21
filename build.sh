@@ -85,11 +85,12 @@ function cloneTC() {
 	
 	elif [ $COMPILER = "aosp" ];
 	then
+	export CLANG_VERSION="clang-r450784e"
 	post_msg " Cloning Aosp Clang ToolChain "
         mkdir clangB
         cd clangB || exit
-	wget -q https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master/clang-r450784e.tar.gz
-        tar -xf clangB*
+	wget -q https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master/${CLANG_VERSION}.tgz
+        tar -xf ${CLANG_VERSION}.tgz
         cd .. || exit
 	git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9.git --depth=1 gcc
 	git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9.git  --depth=1 gcc32
