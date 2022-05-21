@@ -85,7 +85,14 @@ function cloneTC() {
 	
 	elif [ $COMPILER = "aosp" ];
 	then
+	echo "* Checking if Aosp Clang is already cloned..."
+	if [ -d clangB ]; then
+	  echo "××××××××××××××××××××××××××××"
+	  echo "  Already Cloned Aosp Clang"
+	  echo "××××××××××××××××××××××××××××"
+	else
 	export CLANG_VERSION="clang-r450784e"
+	echo "* It's not cloned, cloning it..."
 	post_msg " Cloning Aosp Clang ToolChain "
         mkdir clangB
         cd clangB || exit
@@ -94,6 +101,7 @@ function cloneTC() {
         cd .. || exit
 	git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9.git --depth=1 gcc
 	git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9.git  --depth=1 gcc32
+	fi
 	PATH="${KERNEL_DIR}/clangB/bin:${KERNEL_DIR}/gcc/bin:${KERNEL_DIR}/gcc32/bin:${PATH}"
 	
 	elif [ $COMPILER = "sdclang" ];
@@ -228,13 +236,10 @@ START=$(date +"%s")
 ##----------------------------------------------------------------##
 function zipping() {
 	# Copy Files To AnyKernel3 Zip
-	cp $IMAGE AnyKernel3
-    cp $DTBO AnyKernel3
-    cp $DTB AnyKernel3/dtb
-	rm -rf $IMAGE
-	rm -rf $DTBO
-	rm -rf $DTB
-	
+	mv $IMAGE AnyKernel3
+    mv $DTBO AnyKernel3
+    mv $DTB AnyKernel3/dtb
+
 	# Zipping and Push Kernel
 	cd AnyKernel3 || exit 1
         zip -r9 ${FINAL_ZIP} *
@@ -252,7 +257,6 @@ function zipping() {
 
 cloneTC
 exports
-configs
 compile
 END=$(date +"%s")
 DIFF=$(($END - $START))
