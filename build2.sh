@@ -47,7 +47,7 @@ LINKER=ld.lld
 
 ##----------------------------------------------------------##
 # Specify compiler [ proton, atomx, eva, aosp ]
-COMPILER=atomx
+# COMPILER=atomx
 
 ##----------------------------------------------------------##
 # Clone ToolChain
@@ -233,7 +233,6 @@ function zipping() {
     
 ##----------------------------------------------------------##
 
-cloneTC
 exports
 configs
 compile
