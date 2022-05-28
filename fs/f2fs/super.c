@@ -1613,8 +1613,6 @@ static void default_options(struct f2fs_sb_info *sbi)
 	F2FS_OPTION(sbi).compress_ext_cnt = 0;
 
 	set_opt(sbi, BG_GC);
-	set_opt(sbi, ATGC);
-	set_opt(sbi, GC_MERGE);
 	set_opt(sbi, INLINE_XATTR);
 	set_opt(sbi, INLINE_DATA);
 	set_opt(sbi, INLINE_DENTRY);
