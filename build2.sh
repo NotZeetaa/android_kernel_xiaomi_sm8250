@@ -47,7 +47,7 @@ LINKER=ld.lld
 
 ##----------------------------------------------------------##
 # Specify compiler [ proton, atomx, eva, aosp ]
-# COMPILER=atomx
+COMPILER=aosp
 
 ##----------------------------------------------------------##
 # Clone ToolChain
@@ -80,14 +80,22 @@ function cloneTC() {
 	
 	elif [ $COMPILER = "aosp" ];
 	then
+	echo "* Checking if Aosp Clang is already cloned..."
+	if [ -d clangB ]; then
+	  echo "××××××××××××××××××××××××××××"
+	  echo "  Already Cloned Aosp Clang"
+	  echo "××××××××××××××××××××××××××××"
+	else
+	export CLANG_VERSION="clang-r450784e"
 	post_msg " Cloning Aosp Clang 14.0.1 ToolChain "
         mkdir aosp-clang
         cd aosp-clang || exit
-	wget -q https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master/clang-r450784b.tar.gz
-        tar -xf clang*
+	wget -q https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master/${CLANG_VERSION}.tgz
+        tar -xf ${CLANG_VERSION}.tgz
         cd .. || exit
 	git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9.git --depth=1 gcc
 	git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9.git  --depth=1 gcc32
+	fi
 	PATH="${KERNEL_DIR}/aosp-clang/bin:${KERNEL_DIR}/gcc/bin:${KERNEL_DIR}/gcc32/bin:${PATH}"
 	fi
         # Clone AnyKernel
@@ -215,12 +223,9 @@ START=$(date +"%s")
 ##----------------------------------------------------------------##
 function zipping() {
 	# Copy Files To AnyKernel3 Zip
-	cp $IMAGE AnyKernel3
-    cp $DTBO AnyKernel3
-    cp $DTB AnyKernel3/dtb
-	rm -rf $IMAGE
-	rm -rf $DTBO
-	rm -rf $DTB
+	mv $IMAGE AnyKernel3
+    mv $DTBO AnyKernel3
+    mv $DTB AnyKernel3/dtb
 	
 	# Zipping and Push Kernel
 	cd AnyKernel3 || exit 1
@@ -233,8 +238,8 @@ function zipping() {
     
 ##----------------------------------------------------------##
 
+cloneTC
 exports
-configs
 compile
 END=$(date +"%s")
 DIFF=$(($END - $START))
