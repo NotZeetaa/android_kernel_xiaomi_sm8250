@@ -47,7 +47,7 @@ LINKER=ld.lld
 
 ##----------------------------------------------------------##
 # Specify compiler [ proton, atomx, eva, aosp ]
-COMPILER=aosp
+COMPILER=neutron
 
 ##----------------------------------------------------------##
 # Clone ToolChain
@@ -70,6 +70,11 @@ function cloneTC() {
 	post_msg " Cloning Prelude Clang ToolChain"
 	git clone --depth=1 https://gitlab.com/jjpprrrr/prelude-clang.git clang
 	PATH="${KERNEL_DIR}/clang/bin:$PATH"
+	
+	elif [ $COMPILER = "neutron" ];
+    then
+    git clone --depth=1 https://gitlab.com/dakkshesh07/neutron-clang.git clang
+    PATH="${KERNEL_DIR}/clang/bin:$PATH"
 	
 	elif [ $COMPILER = "eva" ];
 	then
