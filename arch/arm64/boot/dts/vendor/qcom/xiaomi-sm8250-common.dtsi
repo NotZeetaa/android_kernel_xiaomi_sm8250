@@ -17,7 +17,7 @@
 			qcom,silver-khz = <1708800>;
 			qcom,gold-khz = <2419200>;
 			qcom,prime-khz = <3187200>;
-			qcom,trip-deg = <55000>;
+			qcom,trip-deg = <62000>;
 		};
 
 		zone@1 {
@@ -25,7 +25,7 @@
 			qcom,silver-khz = <1708800>;
 			qcom,gold-khz = <2342400>;
 			qcom,prime-khz = <3187200>;
-			qcom,trip-deg = <62000>;
+			qcom,trip-deg = <67000>;
 		};
 
 		zone@2 {
@@ -33,7 +33,7 @@
 			qcom,silver-khz = <1708800>;
 			qcom,gold-khz = <2246400>;
 			qcom,prime-khz = <2553600>;
-			qcom,trip-deg = <65500>;
+			qcom,trip-deg = <69500>;
 		};
 
 		zone@3 {
@@ -41,7 +41,7 @@
 			qcom,silver-khz = <1708800>;
 			qcom,gold-khz = <2054400>;
 			qcom,prime-khz = <2457600>;
-			qcom,trip-deg = <68500>;
+			qcom,trip-deg = <71500>;
 		};
 
 		zone@4 {
@@ -49,7 +49,7 @@
 			qcom,silver-khz = <1708800>;
 			qcom,gold-khz = <1862400>;
 			qcom,prime-khz = <2265600>;
-			qcom,trip-deg = <72000>;
+			qcom,trip-deg = <75000>;
 		};
 
 		zone@5 {
@@ -57,7 +57,7 @@
 			qcom,silver-khz = <1708800>;
 			qcom,gold-khz = <1862400>;
 			qcom,prime-khz = <2073600>;
-			qcom,trip-deg = <74000>;
+			qcom,trip-deg = <77000>;
 		};
 
 		zone@6 {
@@ -65,7 +65,7 @@
 			qcom,silver-khz = <1708800>;
 			qcom,gold-khz = <1766400>;
 			qcom,prime-khz = <1862400>;
-			qcom,trip-deg = <76000>;
+			qcom,trip-deg = <79500>;
 		};
 
 		zone@7 {
@@ -73,7 +73,7 @@
 			qcom,silver-khz = <1708800>;
 			qcom,gold-khz = <1478400>;
 			qcom,prime-khz = <1862400>;
-			qcom,trip-deg = <78000>;
+			qcom,trip-deg = <81000>;
 		};
 
 
@@ -82,7 +82,7 @@
 			qcom,silver-khz = <1708800>;
 			qcom,gold-khz = <1478400>;
 			qcom,prime-khz = <1862400>;
-			qcom,trip-deg = <90000>;
+			qcom,trip-deg = <85000>;
 		};
 	};
 };
